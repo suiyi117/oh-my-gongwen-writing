@@ -1,4 +1,4 @@
-# Agent interface contract for wow-gongwen-writing
+﻿# Agent interface contract for wow-gongwen-writing
 # Aligns with SKILL.md router. Keep in sync when SKILL.md changes.
 
 # —— 跨平台打包契约（cross_packager 必需）——
@@ -27,7 +27,7 @@ compatibility:
     vscode: "agent-skills-source-with-vscode-notes; export_docx optional"
 
 skill: wow-gongwen-writing
-version: 0.2.1
+version: 0.2.2
 mode: production            # 团队可复用；非 governed（政治终审仍由人把关）
 owner: 用户（体制内文秘/办公室）
 review_cadence: 需求驱动
