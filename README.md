@@ -96,7 +96,7 @@ npx skills add https://github.com/onlyLT/wow-gongwen-writing --skill wow-gongwen
 > 默认不会一上来就冲一篇成稿给你，而是走一套**可控、可回头**的流程——每一步你都能叫停、纠偏。
 
 ```
-①取料        问一轮（最多3问）：文种 / 发文机关·行文方向 / 事由诉求 / 关键数据
+①取料        问一轮（通常不超过3问，确有必要时最多4问）：文种 / 发文机关·行文方向 / 事由诉求 / 关键数据
    ↓
 ②定文种      按「文种速判表」定文种 → 核对结构骨架与易错点（方向错先卡住）
    ↓
@@ -394,18 +394,25 @@ python scripts/export_docx.py spec.json       # 生成 Word
 
 ```
 wow-gongwen-writing/
-├── SKILL.md                       # 技能主文件：工作流 + 文种速判表 + 输出契约
+├── SKILL.md                       # 技能主文件：工作流 + 强制确认点 + 文种速判表 + 输出契约
+├── manifest.json                  # 技能元数据（版本/标准依据）
 ├── references/                    # 按需加载的知识库
 │   ├── wenzhong-handbook.md       #   文种手册：每种含 适用/方向/骨架/口径/易错点
 │   ├── format-gbt9704.md          #   GB/T 9704 版式与发文字号/标题/日期规则
 │   ├── style-and-diction.md       #   政府口径文风、开头过渡结尾套路、规范用语
 │   ├── negative-checklist.md      #   负面清单：五类雷区逐条自查
-│   └── craft-principles.md        #   写作内功：标题技法/谋篇骨架/语言十弊/改稿七步(P0/P1/P2)
+│   ├── craft-principles.md        #   写作内功：标题技法/谋篇骨架/语言十弊/改稿七步(P0/P1/P2)
+│   └── export-docx-notes.md       #   导出 Word 操作手册（命令/字体/降级/随稿提示）
 ├── templates/                     # 各文种成稿骨架（大纲加速起点）
+│   ├── fading-gongwen-skeletons.md    #   法定公文骨架
+│   └── shiwu-material-skeletons.md    #   事务性材料骨架
+├── agents/
+│   └── interface.yaml             # 跨平台打包契约（与 SKILL.md 保持同步）
 ├── scripts/
 │   ├── export_docx.py             # 通用公文 → 规范版式 Word 导出器
 │   └── requirements.txt
 ├── examples/                      # 精选真实产物（.docx）
+├── assets/                        # 演示视频与封面（仅 README 展示用，可删）
 └── README.md
 ```
 

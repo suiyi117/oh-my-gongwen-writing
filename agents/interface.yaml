@@ -1,4 +1,4 @@
-﻿# Agent interface contract for wow-gongwen-writing
+# Agent interface contract for wow-gongwen-writing
 # Aligns with SKILL.md router. Keep in sync when SKILL.md changes.
 
 # —— 跨平台打包契约（cross_packager 必需）——
@@ -52,7 +52,7 @@ inputs:
 
 output_contract:
   - stage: 大纲     # 默认先出
-    produces: 标题（发文机关+事由+文种）+ 分层骨架；停下等用户确认
+    produces: 仅输出大纲：标题（发文机关+事由+文种）+ 分层骨架；停笔等用户确认（硬门，见 SKILL.md「强制确认点」）
   - stage: 成稿
     produces: 完整正文（含版式位置提示）
   - stage: 校验清单
@@ -70,6 +70,7 @@ references:
   - references/style-and-diction.md       # 政府口径文风与用语
   - references/negative-checklist.md      # 成稿前负面清单自查
   - references/craft-principles.md        # 写作内功：标题/谋篇/造句法则、语言十弊、改稿七步与P0/P1/P2
+  - references/export-docx-notes.md       # 导出 Word 操作手册（SKILL.md 第 6 步执行前必读）
 templates:
   - templates/fading-gongwen-skeletons.md
   - templates/shiwu-material-skeletons.md
@@ -78,6 +79,7 @@ scripts:
     deps: scripts/requirements.txt  # python-docx
 
 gates:
+  - 交互确认硬门（取料提问后/大纲后/改稿诊断后，未确认不推进；豁免口径见 SKILL.md「强制确认点」）
   - 文种与行文方向判定（硬项：方向/文种错即卡）
   - GB/T 9704 版式要素齐全与写法规范
   - 行文规则（一文一事·单主送·报告不夹带请示等）

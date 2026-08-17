@@ -53,7 +53,8 @@ JSON 规格（所有字段可选，缺省即不出该要素）：
 不支持的版式要素（GB/T 9704 有、本导出器不产出）：份号、密级和保密期限、
 紧急程度、抄送机关、版记（印发机关和印发日期）、页码、印章。
 需要时可用 plain 块近似模拟（如抄送行），或在交付说明中注明由办公室
-套红头模板补全。编 spec 时不要臆造上述字段名——脚本会静默忽略未知字段。
+套红头模板补全。编 spec 时不要臆造上述字段名——未知或冲突字段会被忽略，
+但脚本会打印带 body[i] 定位的 stderr 警告并继续渲染，不会静默。
 
 依赖：python-docx（pip install python-docx）
 """
@@ -71,6 +72,38 @@ ALIGN = {"left": WD_ALIGN_PARAGRAPH.LEFT, "center": WD_ALIGN_PARAGRAPH.CENTER,
 # 二级=楷体三号，三级=仿宋三号加粗，正文=仿宋三号。未装字体时 Word 自动替换。
 DEFAULT_FONTS = {"body": "仿宋_GB2312", "h1": "黑体", "h2": "楷体_GB2312",
                  "h3": "仿宋_GB2312", "title": "方正小标宋简体", "header": "宋体"}
+
+# spec 轻量校验：未知/异常字段打印 stderr 警告（带 body[i] 定位）但继续渲染，
+# 不中断。防止编 spec 时拼错键名（如 "h1 " 带空格）导致整段内容无声丢失。
+TOP_KEYS = {"output", "red_header", "brief_header", "issue_no", "issuer_left",
+            "issuer_right", "signer", "wenhao", "red_line", "title", "zhusong",
+            "body", "signoff_name", "signoff_date", "fuzhu", "fonts"}
+BLOCK_KEYS = {"text", "h1", "h2", "h3", "plain", "align", "font", "size",
+              "bold", "color", "no_indent", "line"}
+HEAD_KEYS = ("h1", "h2", "h3")
+
+
+def validate_spec(spec):
+    for k in spec:
+        if k not in TOP_KEYS:
+            print(f"WARN: 顶层未知字段 {k!r}，将被忽略", file=sys.stderr)
+    for i, blk in enumerate(spec.get("body", [])):
+        if not isinstance(blk, dict):
+            print(f"WARN: body[{i}] 不是对象，将被跳过", file=sys.stderr)
+            continue
+        for k in blk:
+            if k not in BLOCK_KEYS:
+                print(f"WARN: body[{i}] 未知键 {k!r}，将被忽略", file=sys.stderr)
+        heads = [k for k in HEAD_KEYS if k in blk]
+        if "plain" in blk and (heads or "text" in blk):
+            print(f"WARN: body[{i}] plain 与标题/text 键并存，仅 plain 生效，其余被忽略",
+                  file=sys.stderr)
+        if len(heads) > 1:
+            print(f"WARN: body[{i}] 多个标题键 {heads} 并存，仅 {heads[0]!r} 生效",
+                  file=sys.stderr)
+        if "plain" not in blk and not heads and "text" not in blk:
+            print(f"WARN: body[{i}] 没有可渲染内容键（text/h1/h2/h3/plain），将被跳过",
+                  file=sys.stderr)
 
 
 def set_font(run, cn, size=16, bold=False, color=None):
@@ -113,6 +146,7 @@ def red_line(doc):
 
 
 def build(spec):
+    validate_spec(spec)
     fonts = dict(DEFAULT_FONTS); fonts.update(spec.get("fonts", {}))
     doc = Document()
     s = doc.sections[0]
@@ -157,6 +191,8 @@ def build(spec):
 
     # —— 正文块 ——
     for blk in spec.get("body", []):
+        if not isinstance(blk, dict):
+            continue  # validate_spec 已对该块打印 WARN，此处跳过不渲染
         if "plain" in blk:
             p = new_para(doc, blk.get("align"), line=blk.get("line", 29),
                          first_indent=(blk.get("size", 16) * 2 if not blk.get("no_indent") else None))

@@ -10,7 +10,7 @@ python scripts/export_docx.py spec.json -o x.docx # 覆盖输出路径
 python scripts/export_docx.py --demo demo.json    # 生成示例 JSON 参考
 ```
 
-- 正文块类型：`text`/`h1`/`h2`/`plain`、`red_header`/`brief_header`/`signer`/`wenhao`/`title`/`zhusong`/`signoff_*`/`fuzhu` 等，完整清单见脚本顶部文档字符串。
+- 正文块类型：`text`/`h1`/`h2`/`h3`/`plain`、`red_header`/`brief_header`/`signer`/`wenhao`/`title`/`zhusong`/`signoff_*`/`fuzhu` 等，完整清单见脚本顶部文档字符串。
 - 脚本路径以本 skill 根目录为基准，从其他目录调用时写全路径。
 
 ## 字体层级缺省（经实际发文核校，GB/T 9704 标准层级）
