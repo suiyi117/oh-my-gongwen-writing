@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📄 公文写作助手 · wow-gongwen-writing
+# 📄 公文写作助手 · oh-my-gongwen-writing
 
 **把零散要点和素材，一键起草成规范、可发文的体制内公文。**
 
@@ -70,7 +70,7 @@
 **① 一行命令（最快）**：
 
 ```bash
-npx skills add https://github.com/onlyLT/wow-gongwen-writing --skill wow-gongwen-writing
+npx skills add https://github.com/onlyLT/wow-gongwen-writing --skill oh-my-gongwen-writing
 ```
 
 **② 让有 shell 权限的 AI Agent 帮你装（复制这段话直接发，任意平台通用）**：
@@ -81,7 +81,7 @@ npx skills add https://github.com/onlyLT/wow-gongwen-writing --skill wow-gongwen
 
 **③ 手动放进 skills 目录**：下载 / 克隆本仓库后，把整个目录放进你的 agent 的 skills 加载路径即可——如Claude Code 放进 `~/.claude/skills`目录下，重启后自然触发；其他 Agent Skills 兼容平台放进各自对应的路径。
 
-> 核心写作能力**零依赖**，任何 Agent Skills 兼容 harness 都能跑（导出 Word 是可选能力，见下）。安装后技能触发名为 `wow-gongwen-writing`。
+> 核心写作能力**零依赖**，任何 Agent Skills 兼容 harness 都能跑（导出 Word 是可选能力，见下）。安装后技能触发名为 `oh-my-gongwen-writing`。
 
 ### 2️⃣ 三种常见用法
 
@@ -393,7 +393,7 @@ python scripts/export_docx.py spec.json       # 生成 Word
 ## 📁 目录结构
 
 ```
-wow-gongwen-writing/
+oh-my-gongwen-writing/
 ├── SKILL.md                       # 技能主文件：工作流 + 强制确认点 + 文种速判表 + 输出契约
 ├── manifest.json                  # 技能元数据（版本/标准依据）
 ├── references/                    # 按需加载的知识库

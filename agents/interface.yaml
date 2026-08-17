@@ -1,11 +1,11 @@
-# Agent interface contract for wow-gongwen-writing
+# Agent interface contract for oh-my-gongwen-writing
 # Aligns with SKILL.md router. Keep in sync when SKILL.md changes.
 
 # —— 跨平台打包契约（cross_packager 必需）——
 interface:
   display_name: "公文写作（政府口径）"
   short_description: "中国体制内公文起草：法定公文+事务性材料，先出大纲再逐段填，可导出 GB/T 9704 版式 Word"
-  default_prompt: "用 wow-gongwen-writing 帮我起草一份【文种，如通知/请示/报告/专报】：先判文种与行文方向、出大纲让我确认，再逐段填成稿并做版式与行文规则校验；需要时导出为 Word。"
+  default_prompt: "用 oh-my-gongwen-writing 帮我起草一份【文种，如通知/请示/报告/专报】：先判文种与行文方向、出大纲让我确认，再逐段填成稿并做版式与行文规则校验；需要时导出为 Word。"
 compatibility:
   canonical_format: "agent-skills"
   adapter_targets: ["openai", "claude", "generic", "vscode"]
@@ -26,7 +26,7 @@ compatibility:
     generic: "neutral-source; export_docx optional, else deliver markdown"
     vscode: "agent-skills-source-with-vscode-notes; export_docx optional"
 
-skill: wow-gongwen-writing
+skill: oh-my-gongwen-writing
 version: 0.2.2
 mode: production            # 团队可复用；非 governed（政治终审仍由人把关）
 owner: 用户（体制内文秘/办公室）
@@ -56,7 +56,7 @@ output_contract:
   - stage: 成稿
     produces: 完整正文（含版式位置提示）
   - stage: 校验清单
-    produces: 版式/行文规则/政治性/风险点逐条 + 【待补】汇总
+    produces: 版式/行文规则/政治性/风险点逐条 + 三类占位符汇总（待补事实/示意值/待核原文，无则写无；语法以 SKILL.md 为准）
 
 out_of_scope:
   - 党委/纪检/组织/宣传强政治口径专稿的政治终审（可起草，须人把关）

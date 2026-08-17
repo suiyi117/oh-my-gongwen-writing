@@ -29,7 +29,7 @@ python scripts/export_docx.py --demo demo.json    # 生成示例 JSON 参考
 
 - 依赖 `python-docx`（`pip install -r scripts/requirements.txt`）。
 - 命令中的 `python` 若不可用或**静默失败**（退出码非 0 且无输出，典型如 Windows 商店占位 stub），改用 `uv run --with python-docx python`（推荐，无需预装依赖）或 `py -3`。
-- 生成后 `【待补】` 占位仍保留在 docx 中，提示用户填定后方可发文。
+- 生成后正文中的待补事实占位符（统一格式 `【待补：xx】`）仍保留在 docx 中，提示用户填定后方可发文。
 
 ## 可移植性与降级（跨 agent 平台运行时）
 
